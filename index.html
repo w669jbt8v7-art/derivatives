@@ -31,11 +31,14 @@ canvas{width:100%;height:100%;display:block}
 .grid{display:grid;grid-template-columns:minmax(0,1fr) 350px;gap:18px}.side{display:flex;flex-direction:column;gap:14px}.infoCard{padding:18px}.label{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:800}.big{font-size:27px;font-weight:850;letter-spacing:-.7px;margin-top:5px}.big.blue{color:var(--vtb)}.big.green{color:var(--green)}.description{font-size:13px;line-height:1.48;color:#475467;margin-top:7px}.miniGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:13px}.mini{background:var(--soft);padding:12px;border-radius:14px}.miniVal{font-size:18px;font-weight:800;margin-top:3px}
 .engine{padding:18px;background:linear-gradient(145deg,#002882,#064FC9);color:white;position:relative;overflow:hidden}.engine:after{content:"";width:180px;height:180px;border-radius:50%;position:absolute;right:-80px;top:-100px;background:rgba(0,174,239,.25)}.engineTitle{font-size:11px;opacity:.68;text-transform:uppercase;letter-spacing:.1em;font-weight:800}.engineQuestion{margin-top:9px;font-size:18px;font-weight:800;line-height:1.25;position:relative;z-index:2}.engineAnswer{margin-top:12px;padding:11px 12px;border-radius:12px;background:rgba(255,255,255,.11);font-size:13px;line-height:1.4;position:relative;z-index:2}.engineAnswer.flash{animation:flash .55s ease}@keyframes flash{0%{transform:scale(.96);opacity:.3}100%{transform:scale(1);opacity:1}}
 .cashList{margin-top:13px;display:flex;flex-direction:column;gap:8px;max-height:165px;overflow:auto}.cashItem{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 10px;border-radius:11px;background:#F8FAFC;font-size:12px;animation:cashIn .35s ease}@keyframes cashIn{from{transform:translateY(8px);opacity:0}}.cashItem strong{color:var(--green)}
-.controls{padding:17px;display:grid;grid-template-columns:auto auto auto 1fr;gap:10px;align-items:center}.btn{border:0;border-radius:12px;padding:11px 16px;cursor:pointer;font-weight:800;transition:.18s}.btn:hover{transform:translateY(-1px)}.btnPrimary{color:#fff;background:linear-gradient(90deg,var(--vtb),#0954D9);box-shadow:0 6px 16px rgba(10,109,255,.22)}.btnSecondary{color:#344054;background:#F2F4F7}.sliderArea{display:grid;grid-template-columns:130px 1fr 55px;align-items:center;gap:10px;margin-left:10px}.sliderArea span{font-size:11px;color:var(--muted)}input[type=range]{width:100%;accent-color:var(--vtb)}
+.controls{padding:17px;display:grid;grid-template-columns:auto auto auto 1fr;gap:10px;align-items:center}
+/* Панель управления внутри карточки графика */
+.controlsTop{margin:0;padding:14px 28px;border-radius:0;border-bottom:1px solid #eef2f7;background:rgba(255,255,255,.96);box-shadow:none;backdrop-filter:none}
+.btn{border:0;border-radius:12px;padding:11px 16px;cursor:pointer;font-weight:800;transition:.18s}.btn:hover{transform:translateY(-1px)}.btnPrimary{color:#fff;background:linear-gradient(90deg,var(--vtb),#0954D9);box-shadow:0 6px 16px rgba(10,109,255,.22)}.btnSecondary{color:#344054;background:#F2F4F7}.sliderArea{display:grid;grid-template-columns:130px 1fr 55px;align-items:center;gap:10px;margin-left:10px}.sliderArea span{font-size:11px;color:var(--muted)}input[type=range]{width:100%;accent-color:var(--vtb)}
 .settings{margin-top:12px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.setting{padding:12px 14px;border:1px solid var(--line);border-radius:14px}.settingHead{display:flex;justify-content:space-between;gap:10px;font-size:11px;color:var(--muted);margin-bottom:8px}.setting strong{color:var(--ink)}.footer{margin-top:20px;color:#98A2B3;font-size:10px;line-height:1.45}
 
 @media(max-width:1000px){.grid{grid-template-columns:1fr}.side{display:grid;grid-template-columns:repeat(3,1fr)}.settings{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:700px){.app{padding:12px 14px 30px}.chartWrap{height:410px}.header{flex-direction:column}.qual{white-space:normal}h1{font-size:27px}.side{display:flex}.controls{grid-template-columns:1fr 1fr}.sliderArea{grid-column:1/-1;margin-left:0}}
+@media(max-width:700px){.app{padding:12px 14px 30px}.chartWrap{height:410px}.header{flex-direction:column}.qual{white-space:normal}h1{font-size:27px}.side{display:flex}.controls{grid-template-columns:1fr 1fr}.sliderArea{grid-column:1/-1;margin-left:0}.controlsTop{padding:12px 16px}}
 </style>
 
 <style id="desktop-overhaul">
@@ -89,13 +92,21 @@ canvas{width:100%;height:100%;display:block}
 
   /* Controls feel like a command bar attached to chart */
   .controls {
-    margin-top:12px;
     padding:12px 14px;
     border-radius:18px;
     grid-template-columns:auto auto auto minmax(360px,1fr);
     box-shadow:0 10px 30px rgba(16,42,85,.07);
     background:rgba(255,255,255,.94);
     backdrop-filter:blur(12px);
+  }
+  .controlsTop {
+    margin:0;
+    padding:12px 34px;
+    border-radius:0;
+    border-bottom:1px solid #eef2f7;
+    box-shadow:none;
+    backdrop-filter:none;
+    background:rgba(255,255,255,.96);
   }
   .btn { min-height:44px; padding:11px 19px; }
   .btnPrimary { min-width:145px; }
@@ -174,6 +185,7 @@ canvas{width:100%;height:100%;display:block}
   .chartWrap { height:clamp(580px, 61vh, 760px); }
   .cardHeader { padding-left:34px; padding-right:34px; }
   .chartLegend { padding-left:34px; padding-right:34px; }
+  .controlsTop { padding-left:34px; padding-right:34px; }
 }
 </style>
 
@@ -181,7 +193,7 @@ canvas{width:100%;height:100%;display:block}
 <body>
 <div class="app">
 
-  <!-- АНИМАЦИЯ ТЕПЕРЬ САМАЯ ПЕРВАЯ НА СТРАНИЦЕ -->
+  <!-- АНИМАЦИЯ САМАЯ ПЕРВАЯ НА СТРАНИЦЕ -->
   <section class="heroAnimation">
     <div class="card chartCard">
       <div class="cardHeader">
@@ -191,6 +203,15 @@ canvas{width:100%;height:100%;display:block}
         </div>
         <div class="statusPill" id="statusPill">Ожидание запуска</div>
       </div>
+
+      <!-- ПАНЕЛЬ УПРАВЛЕНИЯ ПЕРЕНЕСЕНА НАВЕРХ, К ГРАФИКУ -->
+      <div class="controls controlsTop">
+        <button class="btn btnPrimary" id="playBtn" onclick="togglePlay()">▶ Запустить</button>
+        <button class="btn btnSecondary" onclick="nextObservation()">Следующая дата</button>
+        <button class="btn btnSecondary" onclick="resetSimulation()">↻ Сброс</button>
+        <div class="sliderArea"><span>Ход сценария</span><input type="range" id="progressSlider" min="0" max="1000" value="0"><strong id="progressLabel">0%</strong></div>
+      </div>
+
       <div class="chartWrap">
         <canvas id="chart"></canvas>
         <div class="resultOverlay" id="resultOverlay">
@@ -211,13 +232,6 @@ canvas{width:100%;height:100%;display:block}
       <div class="timeline" id="timeline"></div>
     </div>
   </section>
-
-  <div class="card controls">
-    <button class="btn btnPrimary" id="playBtn" onclick="togglePlay()">▶ Запустить</button>
-    <button class="btn btnSecondary" onclick="nextObservation()">Следующая дата</button>
-    <button class="btn btnSecondary" onclick="resetSimulation()">↻ Сброс</button>
-    <div class="sliderArea"><span>Ход сценария</span><input type="range" id="progressSlider" min="0" max="1000" value="0"><strong id="progressLabel">0%</strong></div>
-  </div>
 
   <header class="header">
     <div class="brand"><div class="logoMark"><i></i><i></i><i></i></div><div class="logoText">ВТБ</div></div>
@@ -282,4 +296,17 @@ function togglePlay(){if(finished)resetSimulation();playing=!playing;playBtn.inn
 function animate(t){if(!playing)return;let dt=t-lastTime;lastTime=t;progress+=dt/(9000*(+$("speedSelect").value));if(progress>=1)progress=1;processCrossed();updateUI();draw();if(progress>=1||finished){playing=false;playBtn.innerText="▶ Запустить";return}raf=requestAnimationFrame(animate)}
 function nextObservation(){if(finished)return;playing=false;cancelAnimationFrame(raf);playBtn.innerText="▶ Продолжить";let max=labels.length-1,next=Math.min(Math.floor(progress*max+.0001)+1,max);progress=next/max;processCrossed();updateUI();draw()}
 function processCrossed(){let max=scenarios[scenarioKey].data.length-1,reached=Math.floor(progress*max+.00001);for(let i=1;i<=reached;i++)if(!observationProcessed.has(i)){processObservation(i);observationProcessed.add(i);if(finished)break}}
-function processObservation(i){let vals=scenarios[scenarioKey].data[i],call=+callBarrier.value,delivery=+deliveryBarrier.value,cp=+coupon.value,isFinal=i===labels.length-1,allCall=vals.every(v=>v>=call);addCoupon(i,cp);pulse();if(!isFinal){engineQuestion.innerText="Все акции ≥ барьера отзыва?";if(allCall){engineAnswer.innerHTML="<strong>ДА.</strong> Условие автоколла выполнено. Продукт погашается досрочно.";statusPill.innerText="Досрочный отзыв";statusPill.className="statusPill success";addCash("Возврат премии","+100%");finished=true;setTimeout(()=>showResult(true,"Досрочный отзыв","Все активы достигли барьера отзыва. Инвестор получает фиксированный доход и 100% премии. Дальнейшие расчёты прекращаются."),400);return}engineAnswer.innerHTML="<strong>НЕТ.</strong> Хотя бы одна акция ниже барьера. Продукт продолжает действовать."}if(isFinal){engineQuestion.innerText="Все акции ≥ барьера поставки?";if(vals.every(v=>v>=delivery)){engineAnswer.innerHTML="<strong>ДА.</strong> Поставка не возникает. Возвращается 100% премии.";addCash("Возврат премии","+100%");statusPill.innerText="Плановое погашение";statusPill.className="statusPill success";finished=true;setTimeout(()=>showResult(true,"100% премии возвращается","В дату погашения все акции выше барьера поставки. Инвестор получает фиксированный доход и 100% премии."),400)}else{let w=Math.min(...vals),idx=vals.indexOf(w);engineAnswer.innerHTML="<strong>НЕТ.</strong> "+
+function processObservation(i){let vals=scenarios[scenarioKey].data[i],call=+callBarrier.value,delivery=+deliveryBarrier.value,cp=+coupon.value,isFinal=i===labels.length-1,allCall=vals.every(v=>v>=call);addCoupon(i,cp);pulse();if(!isFinal){engineQuestion.innerText="Все акции ≥ барьера отзыва?";if(allCall){engineAnswer.innerHTML="<strong>ДА.</strong> Условие автоколла выполнено. Продукт погашается досрочно.";statusPill.innerText="Досрочный отзыв";statusPill.className="statusPill success";addCash("Возврат премии","+100%");finished=true;setTimeout(()=>showResult(true,"Досрочный отзыв","Все активы достигли барьера отзыва. Инвестор получает фиксированный доход и 100% премии. Дальнейшие расчёты прекращаются."),400);return}engineAnswer.innerHTML="<strong>НЕТ.</strong> Хотя бы одна акция ниже барьера. Продукт продолжает действовать."}if(isFinal){engineQuestion.innerText="Все акции ≥ барьера поставки?";if(vals.every(v=>v>=delivery)){engineAnswer.innerHTML="<strong>ДА.</strong> Поставка не возникает. Возвращается 100% премии.";addCash("Возврат премии","+100%");statusPill.innerText="Плановое погашение";statusPill.className="statusPill success";finished=true;setTimeout(()=>showResult(true,"100% премии возвращается","В дату погашения все акции выше барьера поставки. Инвестор получает фиксированный доход и 100% премии."),400)}else{let w=Math.min(...vals),idx=vals.indexOf(w);engineAnswer.innerHTML="<strong>НЕТ.</strong> "+ASSETS[idx]+" ниже барьера поставки. Возникает поставка наихудшей акции.";statusPill.innerText="Поставка акций";statusPill.className="statusPill danger";finished=true;setTimeout(()=>showResult(false,"Поставка наихудшей акции",ASSETS[idx]+" завершила сценарий на уровне "+w+"%. Происходит поставка наихудшей акции и выплата денежного остатка за дробные лоты."),400)}}}
+function addCoupon(i,cp){income+=cp;incomeTotal.innerText=income.toFixed(1).replace(".",",")+"%";if(cashList.children.length===1&&cashList.children[0].style.color)cashList.innerHTML="";addCash("Доход · "+labels[i],"+"+cp.toFixed(1).replace(".",",")+"%")}
+function addCash(n,v){let e=document.createElement("div");e.className="cashItem";e.innerHTML="<span>"+n+"</span><strong>"+v+"</strong>";cashList.prepend(e)}
+function pulse(){engineAnswer.classList.remove("flash");void engineAnswer.offsetWidth;engineAnswer.classList.add("flash")}
+function showResult(ok,t,txt){resultIcon.className="resultIcon "+(ok?"ok":"bad");resultIcon.innerText=ok?"✓":"↓";resultTitle.innerText=t;resultText.innerText=txt;resultOverlay.classList.add("show")}
+function updateUI(){progressSlider.value=Math.round(progress*1000);progressLabel.innerText=Math.round(progress*100)+"%";let d=scenarios[scenarioKey].data,e=progress*(d.length-1),i=Math.min(Math.floor(e+.001),d.length-1);periodName.innerText=labels[i];periodDescription.innerText=i===0?"Продукт запущен. В даты оценки будет проверяться корзина активов.":i<d.length-1?"В дату оценки выплачивается фиксированный доход и проверяется условие досрочного отзыва.":"Финальная дата: проверяется барьер поставки.";let vals=ASSETS.map((_,a)=>iv(a,progress)),mn=Math.min(...vals),wi=vals.indexOf(mn);worstAsset.innerText=ASSETS[wi];worstValue.innerText=mn.toFixed(1).replace(".",",")+"%";document.querySelectorAll(".tStep").forEach(el=>{let n=+el.dataset.index;el.classList.remove("done","active");if(e>=n+.02)el.classList.add("done");else if(Math.abs(e-n)<.18)el.classList.add("active")})}
+function resetSimulation(){playing=false;cancelAnimationFrame(raf);progress=0;finished=false;observationProcessed.clear();income=0;resultOverlay.classList.remove("show");statusPill.innerText="Ожидание запуска";statusPill.className="statusPill";engineQuestion.innerText="Все акции ≥ барьера отзыва?";engineAnswer.innerText="Проверка начнётся в первую дату оценки.";incomeTotal.innerText="0,0%";cashList.innerHTML='<div class="cashItem" style="color:#98A2B3">Выплаты появятся здесь</div>';playBtn.innerText="▶ Запустить";updateUI();draw()}
+document.querySelectorAll(".scenarioBtn").forEach(btn=>btn.addEventListener("click",()=>{document.querySelectorAll(".scenarioBtn").forEach(b=>b.classList.remove("active"));btn.classList.add("active");scenarioKey=btn.dataset.scenario;resetSimulation();periodDescription.innerText=scenarios[scenarioKey].description}));
+progressSlider.addEventListener("input",()=>{if(finished)return;playing=false;cancelAnimationFrame(raf);progress=+progressSlider.value/1000;observationProcessed.clear();income=0;cashList.innerHTML="";let reached=Math.floor(progress*(labels.length-1)+.00001);for(let i=1;i<=reached;i++){let cp=+coupon.value;income+=cp;observationProcessed.add(i);addCash("Доход · "+labels[i],"+"+cp.toFixed(1).replace(".",",")+"%")}incomeTotal.innerText=income.toFixed(1).replace(".",",")+"%";updateUI();draw()});
+callBarrier.addEventListener("input",()=>{$("callBarrierLabel").innerText=callBarrier.value+"%";draw()});deliveryBarrier.addEventListener("input",()=>{$("deliveryBarrierLabel").innerText=deliveryBarrier.value+"%";draw()});coupon.addEventListener("input",()=>{$("couponLabel").innerText=(+coupon.value).toFixed(1).replace(".",",")+"%"});
+setTimeout(()=>{resizeCanvas();updateUI()},50);
+</script>
+</body>
+</html>
